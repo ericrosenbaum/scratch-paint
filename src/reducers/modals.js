@@ -5,6 +5,11 @@ const MODAL_FILL_COLOR = 'fillColor';
 const MODAL_STROKE_COLOR = 'strokeColor';
 
 const initialState = {
+    [MODAL_FILL_COLOR]: true,
+    [MODAL_STROKE_COLOR]: false
+};
+
+const everythingClosedState = {
     [MODAL_FILL_COLOR]: false,
     [MODAL_STROKE_COLOR]: false
 };
@@ -13,11 +18,11 @@ const reducer = function (state, action) {
     if (typeof state === 'undefined') state = initialState;
     switch (action.type) {
     case OPEN_MODAL:
-        return Object.assign({}, initialState, {
+        return Object.assign({}, everythingClosedState, {
             [action.modal]: true
         });
     case CLOSE_MODAL:
-        return Object.assign({}, initialState, {
+        return Object.assign({}, everythingClosedState, {
             [action.modal]: false
         });
     default:
