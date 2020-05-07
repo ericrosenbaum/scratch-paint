@@ -24,7 +24,6 @@ const BoundingBoxModes = keyMirror({
     ROTATE: null,
     MOVE: null
 });
-let anchorIcon;
 
 /**
  * Tool that handles transforming the selection and drawing a bounding box with handles.
@@ -50,7 +49,7 @@ class BoundingBoxTool {
         this.boundsScaleHandles = [];
         this.boundsRotHandles = [];
         this._modeMap = {};
-        this._modeMap[BoundingBoxModes.SCALE] = new ScaleTool(onUpdateImage);
+        this._modeMap[BoundingBoxModes.SCALE] = new ScaleTool(mode, onUpdateImage);
         this._modeMap[BoundingBoxModes.ROTATE] = new RotateTool(onUpdateImage);
         this._modeMap[BoundingBoxModes.MOVE] =
             new MoveTool(mode, setSelectedItems, clearSelectedItems, onUpdateImage, switchToTextTool);
@@ -243,12 +242,6 @@ class BoundingBoxTool {
             SELECTION_ANCHOR_SIZE / paper.view.zoom / this.boundsPath.selectionAnchor.bounds.width);
         this.boundsPath.selectionAnchor.position = rect.center;
 
-        if (anchorIcon) {
-            anchorIcon.visible = true;
-            anchorIcon.scale(SELECTION_ANCHOR_SIZE / paper.view.zoom / anchorIcon.bounds.width);
-            anchorIcon.position = rect.center;
-        }
-
         // Make a template to copy
         const boundsScaleCircleShadow =
             new paper.Path.Circle({
@@ -328,9 +321,6 @@ class BoundingBoxTool {
         this.boundsRect = null;
         this.boundsScaleHandles.length = 0;
         this.boundsRotHandles.length = 0;
-        if (anchorIcon) {
-            anchorIcon.visible = false;
-        }
     }
     removeBoundsHandles () {
         removeBoundsHandles();
